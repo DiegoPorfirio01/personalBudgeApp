@@ -8,11 +8,17 @@ class Despesas {
 		this.tipo = tipo
 		this.valor = valor
 		this.descricao = descricao
-
 	}
-	
-}
 
+//for in, recupera as chaves de um array, ou atrivutos de objeto e coloca numa variavel
+	
+	validarDados() {
+		for(let i in this){
+			if(this[i] = null || this[i] == undefined || this[i] == ''){	return false}
+		}
+		return true
+	}
+}
 class Bd {
 	constructor(){
 	let id = localStorage.getItem('id') 
@@ -37,7 +43,7 @@ class Bd {
 		
 
 		localStorage.setItem('id',id)
-}
+	}
 }
 let bd = new Bd()
 
@@ -63,13 +69,10 @@ function cadastrarDispesa() {
 		descricao.value
 		)
 	
-	bd.gravar(despesa)
-
+	if(despesa.validarDados()) {
+		bd.gravar(despesa)
+		$("#Sucesso").modal('show')
+	} else {
+		$("#Error").modal('show')
+	}
 }
-
-
-
-
-
-//primeiro parametro - nome armazenado/ segundo - dado que sera armazanado, encamnhado através de uma notação JSON.
-
