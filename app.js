@@ -1,5 +1,3 @@
-
-
 class Despesas {
 	constructor(ano,mes,dia,tipo,valor,descricao){
 		this.ano = ano
@@ -14,42 +12,44 @@ class Despesas {
 	
 	validarDados() {
 		for(let i in this){
-			if(this[i] = null || this[i] == undefined || this[i] == ''){	return false}
+			if(this[i] == null || this[i] == undefined || this[i] == ''){return false}
 		}
 		return true
 	}
+
 }
+
 class Bd {
 	constructor(){
-	let id = localStorage.getItem('id') 
+		let id = localStorage.getItem('id') 
 
 		if(id === null){
-			localStorage.setItem('id',0)
+			localStorage.setItem('id', 0)
 		}
-
 	}
-
 
 	getProximoId() {
 		let proximoId = localStorage.getItem('id')
-		return parseInt(proximoId) + 1 
-		
+			return parseInt(proximoId) + 1 
 		
 		}
 
 	gravar(d) {
 		let id = this.getProximoId()
+		
 		localStorage.setItem(id, JSON.stringify(d))
 		
-
-		localStorage.setItem('id',id)
+		localStorage.setItem('id', id)
+	
 	}
+
+	
 }
-let bd = new Bd()
 
-console.log(bd)
+let x = new Bd()
 
 
+	
 
 function cadastrarDispesa() {
 
@@ -57,8 +57,8 @@ function cadastrarDispesa() {
 	let mes = document.getElementById('mes')
 	let dia = document.getElementById('dia')
 	let tipo = document.getElementById('tipo')
-	let descricao = document.getElementById('descricao')
 	let valor = document.getElementById('valor')
+	let descricao = document.getElementById('descricao')
 
 	let despesa = new Despesas(
 		ano.value,
@@ -70,9 +70,18 @@ function cadastrarDispesa() {
 		)
 	
 	if(despesa.validarDados()) {
-		bd.gravar(despesa)
-		$("#Sucesso").modal('show')
-	} else {
-		$("#Error").modal('show')
+		x.gravar(despesa)
+
+		document.getElementById('eModal').innerHTML = 'SUCESSO'
+		document.getElementById('div1').className = 'modal-header text-success'
+		document.getElementById('modal_conteudo').innerHTML = 'adicionado'
+		$("#ModeloModal").modal('show')
+		} else {
+		document.getElementById('eModal').innerHTML = 'ERROR'
+		document.getElementById('div1').className = 'modal-header text-danger'
+		document.getElementById('modal_conteudo').innerHTML = "não funcionou"
+		$("#ModeloModal").modal('show')
 	}
 }
+	
+
