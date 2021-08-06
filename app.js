@@ -44,12 +44,52 @@ class Bd {
 	}
 
 	
+	retorno() { 
+	document.getElementById('ano').value = ''
+	document.getElementById('mes').value = ''
+	document.getElementById('dia').value = ''
+	document.getElementById('tipo').value = ''
+	document.getElementById('valor').value = ''
+	document.getElementById('descricao').value = ''
+
+
+	}
+
+
+	recuperarTodosRegistros(){
+		
+		//array de despesas
+		let despesa = Array()
+
+		let id = localStorage.getItem('id')
+
+		//recuperar todas a despesas cadastradas em local Storage
+		
+		for(let i = 1 ; i <= id ; i++){
+			
+			let rec	= JSON.parse(localStorage.getItem(i))
+
+			//verificamos se existe indices null(removidos)
+
+				if (rec !== null) {
+					//poderia colocar o push pra baixo e usar um continue;
+					despesa.push(rec)
+				}
+			
+			}
+
+			return despesa
+
+		}
+	
+			
+	
+	
 }
+	
 
 let x = new Bd()
 
-
-	
 
 function cadastrarDispesa() {
 
@@ -71,17 +111,39 @@ function cadastrarDispesa() {
 	
 	if(despesa.validarDados()) {
 		x.gravar(despesa)
+		document.getElementById('ModalTitle').className = 'modal-title text-primary'
+		document.getElementById('ModalTitle').style.marginLeft = '170px'
+		document.getElementById('ModalTitle').innerHTML = 'SUCESSO TOTAL'
+		document.getElementById('texto').className = 'text-success'
+		document.getElementById('texto').style.fontSize = '22px'
+		document.getElementById('texto').style.marginLeft = '140px'
+		document.getElementById('texto').innerHTML = 'Você Adicionou Dispesa'
+		document.getElementById('botao').className = 'btn btn-success'
+		$("#ModeloModal").modal('show')
+			x.retorno()
 
-		document.getElementById('eModal').innerHTML = 'SUCESSO'
-		document.getElementById('div1').className = 'modal-header text-success'
-		document.getElementById('modal_conteudo').innerHTML = 'adicionado'
-		$("#ModeloModal").modal('show')
 		} else {
-		document.getElementById('eModal').innerHTML = 'ERROR'
-		document.getElementById('div1').className = 'modal-header text-danger'
-		document.getElementById('modal_conteudo').innerHTML = "não funcionou"
+		document.getElementById('ModalTitle').className = 'modal-title text-warning'
+		document.getElementById('ModalTitle').style.marginLeft = '190px'
+		document.getElementById('ModalTitle').innerHTML = 'ERROR 404'
+		document.getElementById('texto').className = 'text-warning'
+		document.getElementById('texto').style.fontSize = '22px'
+		document.getElementById('texto').style.marginLeft = '100px'
+		document.getElementById('texto').innerHTML = 'Você Não Adicionou Dispesa'
+		document.getElementById('botao').className = 'btn btn-danger'
 		$("#ModeloModal").modal('show')
+		
 	}
 }
-	
+
+
+function carregaListaDespesas() {
+	let despesas = Array()
+
+	despesas = x.recuperarTodosRegistros()
+
+	console.log(despesas)
+
+
+}
 
