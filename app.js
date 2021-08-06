@@ -142,8 +142,43 @@ function carregaListaDespesas() {
 
 	despesas = x.recuperarTodosRegistros()
 
-	console.log(despesas)
+//selecionando o elemento tbody da tabela
+	let listaDespesas = document.getElementById('listaDespesas')
 
+/*  					<tr>
+                <td>15/01/2021</td>
+                <td>alimentaçao</td>
+                <td> compras </td>
+                <td> 500,50</td>
+              </tr>
+
+
+percorer o array despesas, listando cada despesa 
+de forma dinâmica*/
+
+despesas.forEach(function(d){
+
+//criando a linha(tr)
+let linha = listaDespesas.insertRow()
+//criar coluna
+linha.insertCell(0).innerHTML = `${d.dia}/${d.mes}/${d.ano}`
+	switch (d.tipo) {
+		case '1': d.tipo = 'Alimentação'
+			break
+		case "2" : d.tipo = 'Educação'
+		 	break
+		case '3' : d.tipo = 'Lazer'
+		  break
+		case '4' : d.tipo = 'Saúde'
+		 break
+		case '5' : d.tipo = 'Transporte'
+	}
+linha.insertCell(1).innerHTML = d.tipo
+
+linha.insertCell(2).innerHTML =  d.descricao
+linha.insertCell(3).innerHTML =  d.valor
+
+})
 
 }
 
