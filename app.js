@@ -98,7 +98,7 @@ class Bd {
 		
 			
 				//dia
-				if (despesa.dia != '') {
+				if(despesa.dia != '') {
 				 despesasFiltradas = despesasFiltradas.filter(f => f.dia == despesa.dia)
 						}
 			//mes
@@ -118,7 +118,7 @@ class Bd {
 
 			//valor
 			if(despesa.valor != '') {
-				despesasFiltradas = despesasFiltradas.filter(f => f.valor == despesa.valor)
+				despesasFiltradas = despesasFiltradas.filter(f => f.valor == despesa.valor) 
 			}
 
 			return despesasFiltradas
@@ -126,9 +126,6 @@ class Bd {
 		}
 		
 	}		
-
-
-	
 
 	
 let x = new Bd()
@@ -179,15 +176,22 @@ function cadastrarDispesa() {
 }
 
 
-function carregaListaDespesas() {
-	let despesas = Array()
+function carregaListaDespesas(despesaFiltro = [], filtro = false){
+	
 
-	despesas = x.recuperarTodosRegistros()
+	//let despesas = Array()
+	if(despesaFiltro.length == 0 && filtro == false) {
+		
+	despesaFiltro = x.recuperarTodosRegistros()
+		} 
 
-//selecionando o elemento tbody da tabela
 	let listaDespesas = document.getElementById('listaDespesas')
+		listaDespesas.innerHTML = ''	
+	
 
-/*  					<tr>
+		
+//selecionando o elemento tbody da tabela
+	/*  					<tr>
                 <td>15/01/2021</td>
                 <td>alimentaçao</td>
                 <td> compras </td>
@@ -198,7 +202,7 @@ function carregaListaDespesas() {
 percorer o array despesas, listando cada despesa 
 de forma dinâmica*/
 
-despesas.forEach(function(d){
+despesaFiltro.forEach(function(d){
 
 //criando a linha(tr)
 let linha = listaDespesas.insertRow()
@@ -228,36 +232,14 @@ function pesquisarDespesa() {
 		let mes = document.getElementById('mes').value
 		let dia = document.getElementById('dia').value
 		let tipo = document.getElementById('tipo').value
-		let descricao= document.getElementById('tipo').value
-		let valor = document.getElementById('descricao').value
+		let descricao= document.getElementById('descricao').value
+		let valor = document.getElementById('valor').value
 
 		let despesa = new Despesas(ano,mes,dia,tipo,descricao,valor)
 
 		let despesaFiltro = x.pesquisar(despesa)
 		
-		console.log(despesaFiltro)
+		carregaListaDespesas(despesaFiltro, true )
+		
 
-		let filtro = document.getElementById('listaDespesas')
-
-
-		despesaFiltro.forEach(function (d){
-
-			let lista = filtro.insertRow()
-			lista.insertCell(0).innerHTML = `${d.ano}/${d.mes}/${d.dia}`
-			switch(d.tipo){
-				case '1': d.tipo = 'Alimentação'
-					break
-				case '2': d.tipo = 'Educação'
-					break
-				case '3': d.tipo = 'Lazer'
-					break
-				case '4': d.tipo = 'Saude'
-					break
-				case '5':d.tipo =  'Transporte'
-			}
-			lista.insertCell(1).innerHTML = d.tipo
-			lista.insertCell(2).innerHTML = d.descricao
-			lista.insertCell(3).innerHTML = d.valor
-
-			})
 }
