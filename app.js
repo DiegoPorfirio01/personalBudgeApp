@@ -91,19 +91,23 @@ class Bd {
 			//Aplicar Filtros
 			
 			//ano
-			if (despesa.ano != '') {
-			despesasFiltradas = despesasFiltradas.filter(f => f.ano == despesa.ano)
+
+				if(despesa.ano != '') {
+				despesasFiltradas = despesasFiltradas.filter(f => f.ano == despesa.ano)
 		  }
+		
 			
-			
+				//dia
+				if (despesa.dia != '') {
+				 despesasFiltradas = despesasFiltradas.filter(f => f.dia == despesa.dia)
+						}
 			//mes
-			
-				if (despesa.mes != '') {
+				if(despesa.mes != '') {
 				despesasFiltradas = despesasFiltradas.filter(f => f.mes == despesa.mes)
 					}
 			//tipo
 
-				if (despesa.tipo != '') {
+				if(despesa.tipo != '') {
 			 despesasFiltradas = despesasFiltradas.filter(f => f.tipo == despesa.tipo)
 			 	}			
 
@@ -117,10 +121,13 @@ class Bd {
 				despesasFiltradas = despesasFiltradas.filter(f => f.valor == despesa.valor)
 			}
 
-			console.log(despesasFiltradas)
+			return despesasFiltradas
+
+		}
+		
 	}		
 
-}	
+
 	
 
 	
@@ -226,6 +233,31 @@ function pesquisarDespesa() {
 
 		let despesa = new Despesas(ano,mes,dia,tipo,descricao,valor)
 
-		x.pesquisar(despesa)
+		let despesaFiltro = x.pesquisar(despesa)
 		
+		console.log(despesaFiltro)
+
+		let filtro = document.getElementById('listaDespesas')
+
+
+		despesaFiltro.forEach(function (d){
+
+			let lista = filtro.insertRow()
+			lista.insertCell(0).innerHTML = `${d.ano}/${d.mes}/${d.dia}`
+			switch(d.tipo){
+				case '1': d.tipo = 'Alimentação'
+					break
+				case '2': d.tipo = 'Educação'
+					break
+				case '3': d.tipo = 'Lazer'
+					break
+				case '4': d.tipo = 'Saude'
+					break
+				case '5':d.tipo =  'Transporte'
+			}
+			lista.insertCell(1).innerHTML = d.tipo
+			lista.insertCell(2).innerHTML = d.descricao
+			lista.insertCell(3).innerHTML = d.valor
+
+			})
 }
