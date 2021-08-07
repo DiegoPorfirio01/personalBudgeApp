@@ -82,14 +82,49 @@ class Bd {
 
 		}
 	
+			pesquisar(despesa) {
+			this.recuperarTodosRegistros()
+
+			let despesasFiltradas = []
+			despesasFiltradas = this.recuperarTodosRegistros()
+
+			//Aplicar Filtros
 			
-	
-	
-}
+			//ano
+			if (despesa.ano != '') {
+			despesasFiltradas = despesasFiltradas.filter(f => f.ano == despesa.ano)
+		  }
+			
+			
+			//mes
+			
+				if (despesa.mes != '') {
+				despesasFiltradas = despesasFiltradas.filter(f => f.mes == despesa.mes)
+					}
+			//tipo
+
+				if (despesa.tipo != '') {
+			 despesasFiltradas = despesasFiltradas.filter(f => f.tipo == despesa.tipo)
+			 	}			
+
+			//descricao
+			if(despesa.descricao != '') {
+				despesasFiltradas = despesasFiltradas.filter(f => f.descricao == despesa.descricao)
+			}
+
+			//valor
+			if(despesa.valor != '') {
+				despesasFiltradas = despesasFiltradas.filter(f => f.valor == despesa.valor)
+			}
+
+			console.log(despesasFiltradas)
+	}		
+
+}	
 	
 
+	
 let x = new Bd()
-
 
 function cadastrarDispesa() {
 
@@ -174,7 +209,6 @@ linha.insertCell(0).innerHTML = `${d.dia}/${d.mes}/${d.ano}`
 		case '5' : d.tipo = 'Transporte'
 	}
 linha.insertCell(1).innerHTML = d.tipo
-
 linha.insertCell(2).innerHTML =  d.descricao
 linha.insertCell(3).innerHTML =  d.valor
 
@@ -182,3 +216,16 @@ linha.insertCell(3).innerHTML =  d.valor
 
 }
 
+function pesquisarDespesa() { 
+		let ano = document.getElementById('ano').value
+		let mes = document.getElementById('mes').value
+		let dia = document.getElementById('dia').value
+		let tipo = document.getElementById('tipo').value
+		let descricao= document.getElementById('tipo').value
+		let valor = document.getElementById('descricao').value
+
+		let despesa = new Despesas(ano,mes,dia,tipo,descricao,valor)
+
+		x.pesquisar(despesa)
+		
+}
