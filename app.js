@@ -202,10 +202,11 @@ function carregaListaDespesas(despesaFiltro = [], filtro = false){
 percorer o array despesas, listando cada despesa 
 de forma dinâmica*/
 
-despesaFiltro.forEach(function(d){
-
+despesaFiltro.forEach(function(d, index){
+let id = index + 1;
 //criando a linha(tr)
 let linha = listaDespesas.insertRow()
+linha.id = id
 //criar coluna
 linha.insertCell(0).innerHTML = `${d.dia}/${d.mes}/${d.ano}`
 	switch (d.tipo) {
@@ -228,7 +229,8 @@ btn.className = 'btn btn-danger'
 btn.innerHTML = '<i class="fas fa-times"> </i>'
 linha.insertCell(4).append(btn)
 btn.onclick= function(){
-	console.log(d)
+	localStorage.removeItem(id)
+	document.getElementById(id).remove()
 }
 
 
